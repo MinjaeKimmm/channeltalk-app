@@ -40,7 +40,7 @@ async function server() {
         app.use(express.json());
         app.use(`/resource/wam/${WAM_NAME}`, express.static(path.join(__dirname, '../../wam/dist')));
 
-        app.put('/function', (req: Request, res: Response) => {
+        app.put('/functions', (req: Request, res: Response) => {
             if (typeof req.headers['x-signature'] !== 'string' || verification(req.headers['x-signature'], JSON.stringify(req.body)) === false) {
                 res.status(401).send('Unauthorized');
             }

@@ -17,10 +17,10 @@ import {
 } from '../../utils/wam'
 import * as Styled from './Send.styled'
 
+import { useSize } from '../../hooks/useSize';
+
 function Send() {
-  useEffect(() => {
-    setSize(390, 172)
-  }, [])
+  useSize({ width: 390, height: 172 });
 
   const chatTitle = useMemo(() => getWamData('chatTitle') ?? '', [])
 
