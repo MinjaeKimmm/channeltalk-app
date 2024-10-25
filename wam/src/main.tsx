@@ -55,7 +55,6 @@ if (!window.ChannelIOWam) {
         },
 
         callFunction: async ({
-            appId,
             name,
             params,
         }: {

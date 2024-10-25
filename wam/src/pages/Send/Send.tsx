@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useCallback } from 'react'
+import { useMemo, useCallback } from 'react'
 import {
   VStack,
   HStack,
@@ -13,14 +13,17 @@ import {
   callFunction,
   callNativeFunction,
   getWamData,
-  setSize,
 } from '../../utils/wam'
 import * as Styled from './Send.styled'
 
 import { useSize } from '../../hooks/useSize';
 
-function Send() {
-  useSize({ width: 390, height: 172 });
+interface SendProps {
+  onNavigate: (page: 'choose' | 'send') => void;
+}
+
+function Send({ onNavigate }: SendProps) {
+  useSize({ width: 390, height: 220 });
 
   const chatTitle = useMemo(() => getWamData('chatTitle') ?? '', [])
 
@@ -133,6 +136,14 @@ function Send() {
             {chatTitle}
           </Text>
         </Styled.CenterTextWrapper>
+      </HStack>
+      <HStack justify="center">
+        <Button
+          colorVariant="red"
+          styleVariant="primary"
+          text="Back to Options"
+          onClick={() => onNavigate('choose')}
+        />
       </HStack>
     </VStack>
   )
