@@ -1,2 +1,2 @@
-export { default as Send } from './Send';
-export { default as ChooseOption } from './ChooseOption';
+export { default as Tutorial } from './tutorial'; 
+export { default as Register } from './register';

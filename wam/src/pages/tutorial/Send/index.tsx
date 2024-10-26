@@ -13,10 +13,10 @@ import {
   callFunction,
   callNativeFunction,
   getWamData,
-} from '../../utils/wam'
-import * as Styled from './Send.styled'
+} from '../../../utils/wam'
+import * as Styled from './Send.styled';
 
-import { useSize } from '../../hooks/useSize';
+import { useSize } from '../../../hooks/useSize';
 
 interface SendProps {
   onNavigate: (page: 'choose' | 'send') => void;

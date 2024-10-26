@@ -8,6 +8,8 @@ let channelTokenMap = new Map<string, [string, string, number]>();
 
 const tutorialMsg  = "This is a test message sent by a manager.";
 const sendAsBotMsg = "This is a test message sent by a bot.";
+
+const registerMsg = "Welcome! Complete the registration to get started.";
 const botName = "Bot";
 
 
@@ -58,6 +60,14 @@ async function registerCommand(accessToken: string) {
                     actionFunctionName: "tutorial",
                     alfMode:            "disable",
                     enabledByDefault:   true,
+                },
+                {
+                    name: "register",
+                    scope: "desk",
+                    description: "Complete your registration",
+                    actionFunctionName: "register",
+                    alfMode: "disable",
+                    enabledByDefault: true,
                 }
             ]
         }
@@ -129,4 +139,20 @@ function tutorial(wamName: string, callerId: string) {
     });
 }
 
-export { requestIssueToken, registerCommand, sendAsBot, tutorial, verification };
+function register(wamName: string, callerId: string) {
+    return ({
+        result: {
+            type: "wam",
+            attributes: {
+                appId: process.env.APP_ID,
+                name: wamName,
+                wamArgs: {
+                    message: registerMsg,
+                    managerId: callerId
+                }
+            }
+        }
+    })
+}
+
+export { requestIssueToken, registerCommand, sendAsBot, tutorial, register, verification };

@@ -9,7 +9,6 @@ if (!window.ChannelIOWam) {
 
     window.ChannelIOWam = {
         getWamData: (key: string): string | null => {
-            console.log(`Mock getWamData called with key: ${key}`);
             const mockData: Record<string, string> = {
                 appearance: 'light',
                 chatTitle: 'Mocked Chat Title',

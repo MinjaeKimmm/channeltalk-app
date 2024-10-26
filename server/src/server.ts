@@ -1,13 +1,11 @@
-import express, { Request, Response } from 'express';
+import express, { Request, Response, NextFunction } from 'express';
 import path from 'path';
-import { requestIssueToken, registerCommand, sendAsBot, tutorial, verification } from './util';
+import { requestIssueToken, registerCommand, sendAsBot, tutorial, register, verification } from './util';
 
 
 require("dotenv").config();
 
 const app = express();
-
-const WAM_NAME = 'wam_name';
 
 async function startServer() {
     const [accessToken, refreshToken, expiresAt]: [string, string, number] = await requestIssueToken();
@@ -21,7 +19,9 @@ async function functionHandler(body: any) {
 
     switch (method) {
         case 'tutorial':
-            return tutorial(WAM_NAME, callerId);
+            return tutorial('tutorial', callerId);
+        case 'register':
+            return register('register', callerId);
         case 'sendAsBot':
             await sendAsBot(
                 channelId,
@@ -30,6 +30,8 @@ async function functionHandler(body: any) {
                 body.params.input.rootMessageId
             );
             return ({result: {}});
+        default:
+            throw new Error('Unknown method');
     }
 }
 
@@ -38,7 +40,15 @@ async function server() {
         await startServer();
 
         app.use(express.json());
-        app.use(`/resource/wam/${WAM_NAME}`, express.static(path.join(__dirname, '../../wam/dist')));
+        app.use(
+            `/wam/:wamName`,
+            (req: Request, res: Response, next: NextFunction) => {
+              const { wamName } = req.params;
+              console.log(`Serving WAM: ${wamName}`);
+              next();
+            },
+            express.static(path.join(__dirname, '../../wam/dist')) // Serve the bundled WAM assets
+          );
 
         app.put('/functions', (req: Request, res: Response) => {
             if (typeof req.headers['x-signature'] !== 'string' || verification(req.headers['x-signature'], JSON.stringify(req.body)) === false) {
