@@ -1,70 +1,31 @@
-import express, { Request, Response, NextFunction } from 'express';
+import express from 'express';
+import { verifyRequest } from './middleware/verification';
+import { functionHandler } from './app/functions';
 import path from 'path';
-import { requestIssueToken, registerCommand, sendAsBot, tutorial, register, verification } from './util';
 
-
-require("dotenv").config();
+import config from './config/env'
 
 const app = express();
 
-async function startServer() {
-    const [accessToken, refreshToken, expiresAt]: [string, string, number] = await requestIssueToken();
-    await registerCommand(accessToken);
-}
+app.use(express.json());
 
-async function functionHandler(body: any) {
-    const method = body.method;
-    const callerId = body.context.caller.id;
-    const channelId = body.context.channel.id;
+app.use(
+    '/wam/:wamName',
+    (req, res, next) => {
+        console.log(`Servicing WAM: ${req.params.wamName}`);
+        next();
+    },
+    express.static(path.join(__dirname, '../../wam/dist'))
+);
 
-    switch (method) {
-        case 'tutorial':
-            return tutorial('tutorial', callerId);
-        case 'register':
-            return register('register', callerId);
-        case 'sendAsBot':
-            await sendAsBot(
-                channelId,
-                body.params.input.groupId,
-                body.params.input.broadcast,
-                body.params.input.rootMessageId
-            );
-            return ({result: {}});
-        default:
-            throw new Error('Unknown method');
-    }
-}
-
-async function server() {
+app.put('/functions', verifyRequest, async (req, res) => {
     try {
-        await startServer();
-
-        app.use(express.json());
-        app.use(
-            `/wam/:wamName`,
-            (req: Request, res: Response, next: NextFunction) => {
-              const { wamName } = req.params;
-              console.log(`Serving WAM: ${wamName}`);
-              next();
-            },
-            express.static(path.join(__dirname, '../../wam/dist')) // Serve the bundled WAM assets
-          );
-
-        app.put('/functions', (req: Request, res: Response) => {
-            if (typeof req.headers['x-signature'] !== 'string' || verification(req.headers['x-signature'], JSON.stringify(req.body)) === false) {
-                res.status(401).send('Unauthorized');
-            }
-            functionHandler(req.body).then(result => {
-                res.send(result);
-            });
-        });
-        
-        app.listen(process.env.PORT, () => {
-            console.log(`Server is running at http://localhost:${process.env.PORT}`);
-        });
-    } catch (error: any) {
-        console.error('Error caught:', error);
+        const result = await functionHandler(req.body);
+        res.json(result);
+    } catch (error) {
+        console.error('Error executing function:', error);
+        res.status(500).json({ error: 'Failed to execute function' });
     }
-}
+});
 
-export { server };
+export default app;
