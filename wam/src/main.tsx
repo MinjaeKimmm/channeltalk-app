@@ -54,6 +54,7 @@ if (!window.ChannelIOWam) {
         },
 
         callFunction: async ({
+            appId,
             name,
             params,
         }: {
@@ -61,8 +62,15 @@ if (!window.ChannelIOWam) {
             name: string;
             params: Record<string, any>;
         }): Promise<any> => {
-            console.log(`Mock callFunction: ${name} with params`, params);
-            return Promise.resolve();
+            console.log(`Mock callFunction of ${appId}: ${name} with params`, params);
+
+            if (name === 'createUser') {
+                return { result: { message: `Hello ${params.input.name}, your account has been created!` } };
+            } else if (name === 'sendAsBot') {
+                return { result: { message: `Bot message sent to group ${params.input.groupId}` } };
+            }
+
+            return { result: null };
         },
 
         callNativeFunction: async ({
@@ -73,7 +81,12 @@ if (!window.ChannelIOWam) {
             params: Record<string, any>;
         }): Promise<any> => {
             console.log(`Mock callNativeFunction: ${name} with params`, params);
-            return Promise.resolve();
+
+            if (name === 'writeGroupMessageAsManager') {
+                return { result: { message: `Manager message sent to group ${params.groupId}` } };
+            }
+
+            return Promise.resolve({ result: null });
         },
 
         callCommand: ({

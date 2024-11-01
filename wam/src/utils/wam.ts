@@ -32,7 +32,9 @@ export async function callFunction(
   params: Record<string, any>
 ) {
   if (typeof window.ChannelIOWam.callFunction === 'function') {
-    return window.ChannelIOWam.callFunction({ appId, name, params })
+    const response = await window.ChannelIOWam.callFunction({ appId, name, params });
+    console.log('Response from ChannelIOWam.callFunction:', response); // <-- Log the raw response
+    return response;
   }
   return Promise.reject()
 }

@@ -1,5 +1,5 @@
 import { VStack, Button, Text } from '@channel.io/bezier-react';
-import { useSize } from '../../../hooks/useSize';
+import { useSize } from '@wam/hooks/useSize';
 
 interface RegisterCompleteProps {
   onRestart: () => void;

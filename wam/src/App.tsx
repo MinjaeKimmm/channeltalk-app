@@ -22,6 +22,7 @@ function App() {
     const wamName = getWamFromPath();
     console.log(`Detected WAM from path: ${wamName}`);
     setCurrentWam(wamName);
+    console.log(currentWam);
   }, [])
 
   const renderWam = () => {
