@@ -1,173 +1,95 @@
-# app-tutorial
+# ChannelTalk App Setup Guide
 
-Hello, world!
+## Prerequisites
+- Node.js
+- npm
+- ngrok
+- Git
 
-This project is a tutorial to develop app-server of Channel Corp. App Store.
+## Installation
 
-Thank you for visiting. 😁
-
-| Index                         |                                                       |
-| ----------------------------- | ----------------------------------------------------- |
-| [Prerequisite](#prerequisite) | -                                                     |
-| [Build](#build)               |                                                       |
-| [APIs](#apis)                 | # [functions](#functions)                             |
-|                               | # [wam(static)](#wam)                                 |
-
-## Prerequisite
-
-- [typescript](https://www.typescriptlang.org)
-- [yarn](https://yarnpkg.com/) v4; Check [here](wam) for wam.
-
-## Build
-
-```sh
-# app-tutorial-ts/wam
-$ npm run build # it builds wam
+1. Clone the repository
+```bash
+git clone https://github.com/MinjaeKimmm/channeltalk-app.git
 ```
 
-
-## Run
-
-### Configuration
-
-Before running the program, make sure to check the [configuration](server/app-config.json) file.
-
-You must prepare the metadata of the app by registering one to Channel App Store.
-
-```json
-{
-    "appId": "your app id",
-    "appSecret": "your app secret",
-    "signingKey": "your signing key",
-    "appstoreURL": "https://app-store-api.exp.channel.io/general/v1/native/functions",
-    "port": 3000
-}
+2. Server Setup
+```bash
+cd server
+npm install
 ```
 
-### Run the program
+3. Environment Configuration
+Create a `.env` file in the server directory and configure the following:
 
-```sh
-# app-tutorial-ts/server
-$ npm start
+### ChannelTalk Configuration
+1. Go to ChannelTalk channel settings > App Store > Create App
+2. Create a new app and set the app name
+3. Copy the following credentials:
+   - Application ID: `APP_ID="your app id"`
+   - Signing Key: `SIGNING_KEY="your signing key"`
+   - App Secret: `APP_SECRET="your app secret"`
+4. Add necessary permissions and save
+
+### Database Configuration
+Add the following database settings to your `.env`:
+```
+DB_USER="your_db_user"
+DB_PASSWORD="your_db_password"
+DB_NAME="your_db_name"
 ```
 
-## APIs
+4. WAM Setup
+```bash
+cd wam
+npm install
+npm run dev
+```
+You can access WAM at `localhost:3000/wam/:wam_name`
 
-### functions
-
-| METHOD | PATH         |
-| ------ | ------------ |
-| PUT    | `/functions` |
-
-This api is to request general functions defined in the project.
-
-You must register it as a functionUrl of the app.
-
-Note that `context` in the function request is automatically full by the Channel App Store.
-
-#### Request
-
-1. tutorial (to prepare wam arguments before opening the wam)
-
-```json
-{
-    "method": "tutorial",
-    "context": {
-        "channel": {
-            "id": "channel id which calls the wam"
-        }
-    }
-}
+5. Start the Server
+```bash
+cd ../server
+npm start
 ```
 
-2. sendAsBot
+## Setting up ngrok
 
-`sendAsBot` is a function to write message as a bot.
+### Installation Options
 
-You can set the name of the bot with [configuration](config) files.
-
-```json
-{
-    "method": "sendAsBot",
-    "params": {
-        "input": {
-            "groupId": "group id to write a message"
-        }
-    },
-    "context": {
-        "channel": {
-            "id": "channel id which calls the wam"
-        }
-    }
-}
+#### For MacOS (Homebrew)
+```bash
+brew install ngrok
 ```
 
-#### Response
-
-_**Success**_
-
-```
-200 OK
-```
-
-1. tutorial
-
-```json
-{
-    "result": {
-        "type": "wam",
-        "attributes": {
-            "appId": "app id",
-            "name": "tutorial",
-            "wamArgs": {
-                "managerId": "4761",
-                "message": "This is a test message sent by a manager."
-            }
-        }
-    }
-}
+#### For Linux/Ubuntu
+```bash
+curl -s https://ngrok-agent.s3.amazonaws.com/ngrok.asc | sudo tee /etc/apt/trusted.gpg.d/ngrok.asc >/dev/null && \
+echo "deb https://ngrok-agent.s3.amazonaws.com buster main" | sudo tee /etc/apt/sources.list.d/ngrok.list && \
+sudo apt update && sudo apt install ngrok
 ```
 
-2. sendAsBot
-
-```json
-{
-  "result": {
-        "type": "string",
-        "attributes": {}
-  }
-}
+#### For Windows (Chocolatey)
+```bash
+choco install ngrok
 ```
 
-_**Failure**_
-
-```
-200 OK
-```
-
-```json
-{
-    "error": {
-        "type": "",
-        "message": "the reason of the failure"
-    }
-}
+### Running ngrok
+```bash
+ngrok http 8000 --region ap
 ```
 
-Note that both the success and the failure return `200 OK` for each request.
+## Final Configuration
 
-### wam
+1. Save the ngrok URL for:
+   - Function endpoint: `ngrok_url/functions`
+   - WAM endpoint: `ngrok_url/wam`
 
-| METHOD | PATH                     |
-| ------ | ------------------------ |
-| -      | `/resource/wam/tutorial` |
-
-This endpoint serves a static page of the wam.
-
-You must register it(`/resource/wam`) as a wamUrl of the app.
-
-#### Response
-
+2. Configure WAM Environment
+Add to `.env` in the wam directory:
 ```
-The wam written in HTML.
+VITE_SERVER_URL=ngrok_url
 ```
+
+## Usage
+Once everything is set up, your application will be accessible through the ngrok URL, and WAM will be available at the configured endpoints.
