@@ -1,6 +1,6 @@
 import axios from 'axios';
-import config from '../../../config/env';
-import { messages } from '../../../config/messages';
+import config from '@server/config/env';
+import { messages } from '@server/config/messages';
 
 // Register multiple commands with ChannelTalk
 export async function registerCommands(accessToken: string) {

@@ -1,5 +1,5 @@
 import crypto from 'crypto';
-import config from '../config/env';
+import config from '@server/config/env';
 
 export function verifySignature(xSignature: string, body: string): boolean {
     const key = crypto.createSecretKey(Buffer.from(config.signingKey, 'hex'));

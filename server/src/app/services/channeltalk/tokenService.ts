@@ -1,5 +1,5 @@
 import axios from 'axios';
-import config from '../../../config/env';
+import config from '@server/config/env';
 
 let channelTokenMap = new Map<string, [string, string, number]>();
 

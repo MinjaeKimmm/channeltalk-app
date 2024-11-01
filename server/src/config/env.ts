@@ -8,6 +8,7 @@ const config = {
     appId: process.env.APP_ID ?? '',
     signingKey: process.env.SIGNING_KEY ?? '',
     appStoreUrl: process.env.APPSTORE_URL ?? '',
+    
 };
 
 export default config

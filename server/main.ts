@@ -1,6 +1,6 @@
-import app from './src/server';
-import config from './src/config/env';
-import { initialize } from './src/utils/init'
+import app from '@server/server';
+import config from '@server/config/env';
+import { initialize } from '@server/utils/init'
 
 async function startServer() {
     try {

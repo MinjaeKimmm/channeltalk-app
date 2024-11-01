@@ -1,6 +1,7 @@
 import express from 'express';
 import { verifyRequest } from './middleware/verification';
 import { functionHandler } from './app/functions';
+import apiRouter from './app/api';
 import path from 'path';
 
 import config from './config/env'
@@ -17,6 +18,8 @@ app.use(
     },
     express.static(path.join(__dirname, '../../wam/dist'))
 );
+
+app.use('/api', apiRouter);
 
 app.put('/functions', verifyRequest, async (req, res) => {
     try {

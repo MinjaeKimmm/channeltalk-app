@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { getChannelToken } from './tokenService';
-import config from '../../../config/env';
+import config from '@server/config/env';
 
 export async function sendMessage(channelId: string, groupId: string, broadcast: boolean, rootMessageId?: string, message?: string) {
   const [accessToken] = await getChannelToken(channelId);

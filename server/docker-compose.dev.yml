@@ -1,0 +1,19 @@
+services:
+  db:
+    image: postgres:13
+    container_name: channeltalk-test-db
+    ports: 
+      - "${DB_PORT:?err}:5432"
+    environment:
+      POSTGRES_USER: ${DB_USER:?err}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:?err}
+      POSTGRES_DB: ${DB_NAME:?err}
+    volumes:
+      - db:/var/lib/postgresql/data
+    healthcheck:
+      test: "pg_isready -U ${DB_USER}"
+      interval: 1s
+      retries: 30
+
+volumes: 
+  db:

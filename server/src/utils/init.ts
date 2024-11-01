@@ -1,5 +1,5 @@
-import { getChannelToken } from '../app/services/channeltalk/tokenService';
-import { registerCommands } from '../app/services/channeltalk/commandService';
+import { getChannelToken } from '@server/app/services/channeltalk/tokenService';
+import { registerCommands } from '@server/app/services/channeltalk/commandService';
 
 export async function initialize(): Promise<void> {
     try {

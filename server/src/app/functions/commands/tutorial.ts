@@ -1,5 +1,5 @@
-import { messages } from '../../../config/messages';
-import config from '../../../config/env';
+import { messages } from '@server/config/messages';
+import config from '@server/config/env';
 
 export function tutorial(wamName: string, callerId: string) {
   return {
