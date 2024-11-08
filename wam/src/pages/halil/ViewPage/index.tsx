@@ -6,6 +6,8 @@ import Layout from '@wam/components/Layout'
 import Clock from '@wam/components/Clock'
 import Header from '@wam/components/Header'
 import TaskBox from '@wam/components/TaskBox'
+import AddButton from '@wam/components/AddButton'
+import Text from '@wam/components/Text'
 
 interface ViewPageProps {
   user: User | undefined
@@ -42,17 +44,47 @@ function ViewPage({
           onClick={onPersonClick}
           username={user.username}
           rate={Math.round(
-            (100 * tasks?.filter((task) => task.completed).length) /
-              tasks?.length
+            (100 * tasks.filter((task) => task.completed).length) / tasks.length
           )}
         />
       )}
+      {user && tasks && (
+        <div
+          style={{
+            width: '100%',
+            display: 'flex',
+            boxSizing: 'border-box',
+            padding: '10px 0px',
+            flexDirection: 'row',
+            alignItems: 'center',
+            height: 'fit-content',
+            justifyContent: 'space-between',
+          }}
+        >
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'row',
+              alignItems: 'center',
+              gap: '4px',
+            }}
+          >
+            <Text
+              type="Title"
+              label={tasks.filter((task) => !task.completed).length.toString()}
+              color="white"
+            />
+            <Text
+              type="Caption"
+              label="개의 할일"
+              color="lightgray"
+            />
+          </div>
 
-      <button
-        style={{ width: '50px', height: '50px' }}
-        onClick={onAddClick}
-        title="add"
-      />
+          <AddButton onClick={onAddClick} />
+        </div>
+      )}
+
       <div style={{ width: '100%', flex: 1, overflowY: 'scroll' }}>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
           {tasks &&

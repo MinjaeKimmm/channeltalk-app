@@ -39,6 +39,20 @@ const tasklists: Record<string, Task[]> = {
       title: '보고서 작성',
       deadline: new Date('2024-11-10T14:00:00').toISOString(),
       assignee: { id: "1", username: '김철수', url: '' },
+      completed: true,
+    },
+    {
+      id: '2',
+      title: '회의 준비',
+      deadline: new Date('2024-11-11T10:00:00').toISOString(),
+      assignee: { id: "1", username: '김철수', url: '' },
+      completed: true,
+    },
+    {
+      id: '1',
+      title: '보고서 작성',
+      deadline: new Date('2024-11-10T14:00:00').toISOString(),
+      assignee: { id: "1", username: '김철수', url: '' },
       completed: false,
     },
     {
