@@ -5,7 +5,7 @@ import * as path from "path";
 const API_BASE = process.env.VITE_API_BASE || `http://localhost:${process.env.SERVER_PORT ?? 8000}`;
 
 export default defineConfig({
-  base: '',
+  base: '/wam/',
   plugins: [react()],
   resolve: {
     alias: {

@@ -15,6 +15,34 @@
       href="https://cf.channel.io/asset/font/Inter/inter.css"
     />
     <title>Tutorial</title>
+    <script>
+      // Only initialize mock if we're in development and ChannelIOWam isn't defined
+      if (window.location.hostname === 'localhost' && typeof window.ChannelIOWam === 'undefined') {
+          console.warn('Initializing mock ChannelIOWam for local development');
+          window.ChannelIOWam = {
+              getWamData: function(key) {
+                  const mockData = {
+                      appearance: 'light',
+                      chatTitle: 'Mocked Chat Title',
+                      appId: 'mock-app-id',
+                      channelId: 'mock-channel-id',
+                      managerId: 'mock-manager-id',
+                      message: 'Hello from the mock!',
+                      chatId: 'mock-chat-id',
+                      chatType: 'group',
+                      broadcast: 'false',
+                      rootMessageId: 'mock-root-message-id',
+                  };
+                  return mockData[key] ?? null;
+              },
+              close: function() {},
+              setSize: function() {},
+              callFunction: function() { return Promise.resolve({ result: null }); },
+              callNativeFunction: function() { return Promise.resolve({ result: null }); },
+              callCommand: function() {},
+          };
+      }
+    </script>
   </head>
   <body>
     <div id="root"></div>
@@ -23,11 +51,14 @@
       src="/src/main.tsx"
     ></script>
     <script>
-      var appearance = ChannelIOWam.getWamData('appearance')
-      if (appearance === 'dark') {
-        document.body.style.backgroundColor = '#464748'
-      } else {
-        document.body.style.backgroundColor = '#FFFFFF'
+      // Only set background if ChannelIOWam exists
+      if (typeof ChannelIOWam !== 'undefined') {
+          var appearance = ChannelIOWam.getWamData('appearance');
+          if (appearance === 'dark') {
+              document.body.style.backgroundColor = '#464748';
+          } else {
+              document.body.style.backgroundColor = '#FFFFFF';
+          }
       }
     </script>
   </body>
