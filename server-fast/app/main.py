@@ -52,6 +52,7 @@ async def serve_spa(full_path: str):
 
 @app.on_event("startup")
 async def startup():
+    await initialize()
     await database.connect()
     
 
