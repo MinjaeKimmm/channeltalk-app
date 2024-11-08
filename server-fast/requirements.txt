@@ -1,8 +1,9 @@
-fastapi==0.78.0
-uvicorn[standard]==0.17.0  
-sqlalchemy==1.4.37  
-databases[postgresql]==0.5.3  
-psycopg2-binary==2.9.3   
-pydantic==1.9.0           
-python-dotenv==0.19.2      
-httpx==0.22.0             
+fastapi
+uvicorn
+sqlalchemy
+pydantic
+asyncpg
+databases
+psycopg2-binary
+python-dotenv
+httpx

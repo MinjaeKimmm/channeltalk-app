@@ -1,8 +1,8 @@
 from fastapi import APIRouter, HTTPException, Request
 from ..functions.commands.register import register
 from ..functions.commands.tutorial import tutorial
-from ..functions.commands.halmal import halmal  
-from ..functions.commands.halil import halil  
+from ..functions.commands.halmal import halmal
+from ..functions.commands.halil import halil
 from ..services.channeltalk.messageService import send_message
 import logging
 
@@ -32,27 +32,16 @@ async def function_handler(request: Request):
             raise HTTPException(status_code=400, detail="Method is required")
 
         # Command functions
-<<<<<<< HEAD
-        if method == "register":
-            result = register("register", caller_id)
-            print(f"Register result: {result}")  # Debug logging
-            return result
-
-        elif method == "tutorial":
-            result = tutorial("tutorial", caller_id)
-            print(f"Tutorial result: {result}")  # Debug logging
-=======
         command_handlers = {
             "register": lambda: register("register", caller_id),
             "tutorial": lambda: tutorial("tutorial", caller_id),
-            "halmal": lambda: halmal("halmal", caller_id),    # Add these
-            "halil": lambda: halil("halil", caller_id),       # handlers
+            "halmal": lambda: halmal("halmal", caller_id),  # Add these
+            "halil": lambda: halil("halil", caller_id),  # handlers
         }
 
         if method in command_handlers:
             result = command_handlers[method]()
             print(f"{method} result: {result}")
->>>>>>> 3e733bc0258e11db45fc565a89d104a01e61803b
             return result
 
         # Channeltalk functions

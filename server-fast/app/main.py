@@ -2,26 +2,16 @@ from fastapi import FastAPI, Request, HTTPException, Depends
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse, JSONResponse
-from .api.userRoutes import router as user_router
 from .functions.routes import router as function_router
 from .middleware.verification import verify_request
-from .db.database import database
 from .utils.init import initialize
 import os
-import mimetypes
 import logging
-
-# Ensure correct MIME types are registered
-# mimetypes.add_type("application/javascript", ".js")
-# mimetypes.add_type("application/javascript", ".mjs")
-# mimetypes.add_type("text/css", ".css")
-# mimetypes.add_type("text/html", ".html")
 
 app = FastAPI()
 
 # Static directory setup
 static_dir = "/app/wam/dist"
-# assets_dir = os.path.join(static_dir, "assets")
 
 # Set up logging
 logging.basicConfig(level=logging.INFO)
@@ -59,16 +49,16 @@ async def serve_wam(wam_name: str):
 @app.on_event("startup")
 async def startup():
     await initialize()
-    await database.connect()
+    # await database.connect()
 
 
 @app.on_event("shutdown")
 async def shutdown():
-    await database.disconnect()
+    pass
+    # await database.disconnect()
 
 
 # Include routers
-app.include_router(user_router, prefix="/api/users")
 app.include_router(
     function_router, prefix="/functions", dependencies=[Depends(verify_request)]
 )
