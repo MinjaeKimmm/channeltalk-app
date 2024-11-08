@@ -18,6 +18,7 @@ logger = logging.getLogger(__name__)
 async def function_handler(request: Request, db: Session = Depends(get_db)):
     try:
         body = await request.json()
+        print(f"Full request body: {body}") 
         logger.info(f"Received JSON: {body}")
         method = body.get("method")
         context = body.get("context", {})
