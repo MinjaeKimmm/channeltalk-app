@@ -1,5 +1,5 @@
 import {
-  CardName,
+  cardNames,
   cards,
   getCardDescription,
   getCardImgUrl,
@@ -9,7 +9,8 @@ import styled from 'styled-components'
 import Text from './Text'
 import { Activity, VenetianMask } from 'lucide-react'
 
-export default function Card(name: CardName) {
+export default function Card({ index }: { index: number }) {
+  const name = cardNames[index]
   return (
     <CardWrapper>
       <AssetWrapper>
@@ -60,6 +61,8 @@ const CardWrapper = styled.div`
   align-items: center;
   justify-content: space-between;
 
+  border-radius: 12px;
+
   background-color: ${colors.darkgray};
 `
 
@@ -77,6 +80,8 @@ const IconWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+
+  border-radius: 100px;
 
   background-color: ${colors.black};
 `

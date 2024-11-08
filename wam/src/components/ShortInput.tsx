@@ -6,7 +6,7 @@ interface ShortInputProps {
   title: string
   maxLength: number
   value: string
-  onValue: (val: string) => void
+  onChange: (val: string) => void
 }
 
 export default function ShortInput(props: ShortInputProps) {
@@ -14,7 +14,7 @@ export default function ShortInput(props: ShortInputProps) {
     const newInput = evt.currentTarget.value
 
     if (newInput.length > props.maxLength) return
-    else props.onValue(newInput)
+    else props.onChange(newInput)
   }
 
   return (

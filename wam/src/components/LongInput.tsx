@@ -6,15 +6,15 @@ interface LongInputProps {
   title: string
   maxLength: number
   value: string
-  onValue: (val: string) => void
+  onChange: (val: string) => void
 }
 
 export default function LongInput(props: LongInputProps) {
-  const onInput = (evt: React.FormEvent<HTMLInputElement>) => {
+  const onInput = (evt: React.ChangeEvent<HTMLTextAreaElement>) => {
     const newInput = evt.currentTarget.value
 
     if (newInput.length > props.maxLength) return
-    else props.onValue(newInput)
+    else props.onChange(newInput)
   }
 
   return (
@@ -26,11 +26,11 @@ export default function LongInput(props: LongInputProps) {
       />
       <LongInputContainer
         value={props.value}
-        onInput={onInput}
+        onChange={onInput}
         maxLength={props.maxLength}
       />
 
-      <div style={{ justifySelf: 'flex-end' }}>
+      <div style={{ alignSelf: 'flex-end' }}>
         <Text
           type="Caption"
           label={`${props.value.length}/${props.maxLength}`}
@@ -52,14 +52,24 @@ const LongInputWrapper = styled.div`
   gap: 12px;
 `
 
-const LongInputContainer = styled.input`
+const LongInputContainer = styled.textarea`
   width: 100%;
   height: 320px;
 
-  background-color: none;
+  background-color: transparent;
   border: 1px solid ${colors.lightgray};
   border-radius: 12px;
 
+  box-sizing: border-box;
+  padding: 12px;
+
   font-size: 24px;
   color: white;
+
+  resize: none;
+  font-family: Pretendard;
+  font-weight: 500;
+  &:focus {
+    outline: none;
+  }
 `

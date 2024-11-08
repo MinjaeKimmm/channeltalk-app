@@ -1,38 +1,34 @@
-import { useState } from 'react';
-import { VStack, Button, Text, TextField } from '@channel.io/bezier-react';
-import { useSize } from '@wam/hooks/useSize';
+import { useState } from 'react'
+import { useSize } from '@wam/hooks/useSize'
+import Header from '@wam/components/Header'
+import Layout from '@wam/components/Layout'
+import Button from '@wam/components/Button'
+import LongInput from '@wam/components/LongInput'
 
 interface TextPageProps {
-  onNext: (message: string) => void;
-  initialMessage: string;
+  onNext: (message: string) => void
+  initialMessage: string
 }
 
 function TextPage({ onNext, initialMessage }: TextPageProps) {
-  useSize({ width: 491, height: 757 });
-  const [message, setMessage] = useState(initialMessage);
+  useSize({ width: 490, height: 760 })
+  const [message, setMessage] = useState(initialMessage)
 
   return (
-    <VStack spacing={24} style={{ height: '100%' }}>
-      <Text typo="24" bold color="txt-black-darkest">
-        할 말
-      </Text>
-      
-      <TextField
+    <Layout>
+      <Header label="할 말" />
+      <LongInput
+        title="못할 말"
         value={message}
-        onChange={(e) => setMessage(e.target.value)}
-        placeholder="보내는말"
-        style={{ flex: 1 }}
+        onChange={(val) => setMessage(val)}
+        maxLength={100}
       />
-      
       <Button
-        colorVariant="blue"
-        styleVariant="primary"
-        text="다음으로"
+        label="다음으로"
         onClick={() => onNext(message)}
-        disabled={!message.trim()}
       />
-    </VStack>
-  );
+    </Layout>
+  )
 }
 
-export default TextPage;
+export default TextPage

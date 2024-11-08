@@ -3,6 +3,8 @@
 export type CardName = "dialogue" | "heartsping" | "jongwon" | "kind" | "mom" | "professional" | "sarcastic" | "seongjae" | "wooakgood"
 export type CardType = "tone" | "character"
 
+export const cardNames: CardName[] = ["dialogue", "heartsping", "jongwon", "kind", "mom", "professional", "sarcastic", "seongjae", "wooakgood"]
+
 export const cards: Record<CardName, { type: CardType, title: string }> = {
   dialogue: {
     type: "tone",

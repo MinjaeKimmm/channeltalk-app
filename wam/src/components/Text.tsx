@@ -35,7 +35,7 @@ export default function Text(props: TextProps) {
         width: 'fit-content',
         color: colors[props.color],
         fontWeight: fontStyle[props.type].weight,
-        fontSize: `${fontStyle[props.type].size}`,
+        fontSize: `${fontStyle[props.type].size}px`,
       }}
       onClick={props.onClick}
     >
