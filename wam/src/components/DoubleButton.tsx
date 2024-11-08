@@ -16,13 +16,13 @@ export default function DoubleButton(props: DoubleButtonProps) {
         <Text
           type="Body"
           label={props.labelLeft}
-          color={colors.white}
+          color="white"
         />
       </SubButtonWrapper>
       <div
         style={{
           width: '1px',
-          height: '80px',
+          height: '80%',
           backgroundColor: colors.lightgray,
         }}
       />
@@ -30,7 +30,7 @@ export default function DoubleButton(props: DoubleButtonProps) {
         <Text
           type="Body"
           label={props.labelRight}
-          color={colors.highlight}
+          color="highlight"
         />
       </SubButtonWrapper>
     </DoubleButtonWrapper>
@@ -45,6 +45,7 @@ const DoubleButtonWrapper = styled.div`
   align-items: center;
   justify-content: center;
 
+  border-radius: 12px;
   background-color: ${colors.darkgray};
 `
 

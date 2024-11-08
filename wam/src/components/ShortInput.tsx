@@ -6,6 +6,7 @@ interface ShortInputProps {
   title: string
   maxLength: number
   value: string
+  disabled: boolean
   onChange: (val: string) => void
 }
 
@@ -25,18 +26,20 @@ export default function ShortInput(props: ShortInputProps) {
         color="lightgray"
       />
       <ShortInputContainer
+        disabled={props.disabled}
         value={props.value}
         onInput={onInput}
         maxLength={props.maxLength}
       />
-
-      <div style={{ justifySelf: 'flex-end' }}>
-        <Text
-          type="Caption"
-          label={`${props.value.length}/${props.maxLength}`}
-          color="lightgray"
-        />
-      </div>
+      {!props.disabled && (
+        <div style={{ justifySelf: 'flex-end' }}>
+          <Text
+            type="Caption"
+            label={`${props.value.length}/${props.maxLength}`}
+            color="lightgray"
+          />
+        </div>
+      )}
     </ShortInputWrapper>
   )
 }
@@ -56,10 +59,17 @@ const ShortInputContainer = styled.input`
   width: 100%;
   height: 50px;
 
-  background-color: none;
+  background-color: transparent;
+  border: none;
   border-bottom: 1px solid ${colors.lightgray};
-  border-radius: 12px;
 
   font-size: 28px;
   color: white;
+
+  font-family: Pretendard;
+  font-weight: 500;
+
+  &:focus {
+    outline: none;
+  }
 `

@@ -13,7 +13,7 @@ interface SpeechPageProps {
 }
 
 function SpeechPage({ onBack, message }: SpeechPageProps) {
-  useSize({ width: 491, height: 757 })
+  useSize({ width: 490, height: 760 })
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
   const totalImages = cardNames.length
 

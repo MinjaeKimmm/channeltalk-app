@@ -1,77 +1,79 @@
-import { VStack, Button, Text, TextField, HStack } from '@channel.io/bezier-react';
-import { useSize } from '@wam/hooks/useSize';
+import DoubleButton from '@wam/components/DoubleButton'
+import Header from '@wam/components/Header'
+import Layout from '@wam/components/Layout'
+import ShortInput from '@wam/components/ShortInput'
+import TaskManager from '@wam/components/TaskManager'
+import { useSize } from '@wam/hooks/useSize'
 
 interface Task {
-    id: string;
-    title: string;
-    deadline: Date;
-    assignee: string;
-    completed: boolean;
+  id: string
+  title: string
+  deadline: Date
+  assignee: {
+    username: string
+    url: string
+  }
+  completed: boolean
 }
 
 interface MorePageProps {
-    task: Task;
-    onDelete: (taskId: string) => void;
-    onComplete: (taskId: string) => void;
-    onCancel: () => void;
+  task: Task
+  onDelete: (taskId: string) => void
+  onComplete: (taskId: string) => void
+  onCancel: () => void
 }
 
 function MorePage({ task, onDelete, onComplete, onCancel }: MorePageProps) {
-    useSize({ width: 491, height: 757 });
+  useSize({ width: 490, height: 760 })
 
-    return (
-        <VStack spacing={24}>
-            <Text typo="24" bold color="txt-black-darkest">
-                할 일
-            </Text>
+  return (
+    <Layout>
+      <Header
+        label="할 일"
+        action={{ label: '뒤로가기', onClick: onCancel }}
+      />
 
-            <Text typo="16" bold color="txt-black-darkest">
-                할 일 제목
-            </Text>
-            <TextField
-                value={task.title}
-                readOnly
-            />
+      <div
+        style={{
+          flex: 1,
+          width: '100%',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'flex-start',
+          justifyContent: 'space-between',
+          boxSizing: 'border-box',
+          padding: '54px 0px',
+        }}
+      >
+        <ShortInput
+          title="할 일 제목"
+          value={task.title}
+          maxLength={0}
+          onChange={() => {}}
+          disabled={true}
+        />
 
-            <Text typo="16" bold color="txt-black-darkest">
-                할 일 기한
-            </Text>
-            <TextField
-                value={task.deadline.toLocaleString()}
-                readOnly
-            />
+        <ShortInput
+          title="할 일 기한"
+          value={task.deadline.toLocaleString()}
+          maxLength={0}
+          onChange={() => {}}
+          disabled={true}
+        />
+        <TaskManager
+          username={task.assignee.username}
+          url={task.assignee.url}
+        />
+      </div>
 
-            <Text typo="16" bold color="txt-black-darkest">
-                할 일 담당자         
-            </Text>
-            <TextField
-                value={task.assignee}
-                readOnly
-            />
-
-            <HStack spacing={8} justify="center" style={{ marginTop: 'auto' }}>
-                <Button
-                    colorVariant="red"
-                    styleVariant="secondary"
-                    text="취소"
-                    onClick={onCancel}
-                />
-                <Button
-                    colorVariant="red"
-                    styleVariant="secondary"
-                    text="삭제"
-                    onClick={() => onDelete(task.id)}
-                />
-                <Button
-                    colorVariant="blue"
-                    styleVariant="primary"
-                    text="완료"
-                    onClick={() => onComplete(task.id)}
-                    disabled={task.completed}
-                />
-            </HStack>
-        </VStack>
-    );
+      <DoubleButton
+        labelLeft="삭제하기"
+        onClickLeft={() => onDelete(task.id)}
+        labelRight="완료하기"
+        onClickRight={() => onComplete(task.id)}
+      />
+    </Layout>
+  )
 }
 
-export default MorePage;
+export default MorePage
