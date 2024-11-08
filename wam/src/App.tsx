@@ -2,9 +2,9 @@ import { useEffect, useState } from 'react'
 import { AppProvider, type ThemeName } from '@channel.io/bezier-react'
 import { isMobile } from './utils/userAgent'
 import { getWamData } from './utils/wam'
-import { Tutorial, Register, Halmal } from './pages'
+import { Tutorial, Register, Halmal, Halil } from './pages'
 
-type WamType = 'tutorial' | 'register' | 'halmal' |'default'
+type WamType = 'tutorial' | 'register' | 'halmal' | 'halil' | 'default'
 
 function App() {
   const [theme, setTheme] = useState<ThemeName>('light')
@@ -13,7 +13,7 @@ function App() {
   const getWamFromPath = () => {
     const pathSegments = window.location.pathname.split('/')
     console.log(pathSegments)
-    return pathSegments[pathSegments.length - 1] as WamType // Extract WAM name
+    return pathSegments[pathSegments.length - 2] as WamType // Extract WAM name
   }
 
   useEffect(() => {
@@ -34,6 +34,8 @@ function App() {
         return <Register />
       case 'halmal':
         return <Halmal />
+      case 'halil':
+        return <Halil onClose={() => console.log('Halil closed')} />
       default:
         return <div>No WAM found</div>
     }
