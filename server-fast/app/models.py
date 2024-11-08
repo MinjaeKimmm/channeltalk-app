@@ -6,9 +6,9 @@ from sqlalchemy import (
     UUID,
     Boolean,
 )
-from database import Base
+from .database import Base
 from sqlalchemy.orm import relationship
-import database
+from . import database
 
 
 class User(Base):
