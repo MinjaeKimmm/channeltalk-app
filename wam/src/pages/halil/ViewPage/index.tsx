@@ -1,17 +1,17 @@
-import { VStack, Button, Text, HStack } from '@channel.io/bezier-react'
-import { PlusIcon } from '@channel.io/bezier-icons'
 import { useSize } from '@wam/hooks/useSize'
-import * as Styled from './ViewPage.styled'
 import { Task, User } from '../type'
 import { useEffect, useState } from 'react'
 import { getTasks } from '@wam/utils/api'
+import Layout from '@wam/components/Layout'
+import Clock from '@wam/components/Clock'
+import Header from '@wam/components/Header'
+import TaskBox from '@wam/components/TaskBox'
 
 interface ViewPageProps {
   user: User | undefined
   onTaskClick: (task: Task) => void
   onPersonClick: () => void
   onAddClick: () => void
-  onClose: () => void
 }
 
 function ViewPage({
@@ -19,7 +19,6 @@ function ViewPage({
   onTaskClick,
   onPersonClick,
   onAddClick,
-  onClose,
 }: ViewPageProps) {
   useSize({ width: 490, height: 760 })
 
@@ -29,67 +28,46 @@ function ViewPage({
     const asyncWrapper = async () => {
       // call all users at first
       if (!user) return
-      setTasks(await getTasks(user.id))
+      setTasks((await getTasks(user.id)).sort())
+      console.log('this is viewpage')
     }
     asyncWrapper()
-  }, [])
-
-  if (!tasks || !user) return
-
-  // Sort tasks by deadline
-  const sortedTasks = tasks.sort(
-    (a, b) => a.deadline.getTime() - b.deadline.getTime()
-  )
+  }, [user])
 
   return (
-    <VStack spacing={24}>
-      <HStack
-        justify="between"
-        align="center"
-      >
-        <Text
-          typo="24"
-          bold
-          color="txt-black-darkest"
-        >
-          할 일
-        </Text>
-        <Button
-          colorVariant="monochrome"
-          styleVariant="tertiary"
-          text="닫기"
-          onClick={onClose}
+    <Layout>
+      <Header label="할 일" />
+      {user && tasks && (
+        <Clock
+          onClick={onPersonClick}
+          username={user.username}
+          rate={Math.round(
+            (100 * tasks?.filter((task) => task.completed).length) /
+              tasks?.length
+          )}
         />
-      </HStack>
+      )}
 
-      {/* Progress Component */}
-      <Styled.ProgressContainer onClick={onPersonClick}>
-        <Text
-          typo="18"
-          bold
-        >
-          {user.username}
-        </Text>
-      </Styled.ProgressContainer>
-
-      {/* Task List */}
-      <Styled.TaskList>
-        {sortedTasks.map((task) => (
-          <div onClick={() => onTaskClick(task)}>{task.title}</div>
-        ))}
-      </Styled.TaskList>
-
-      {/* Add Button */}
-      <Styled.AddButtonWrapper>
-        <Button
-          colorVariant="blue"
-          styleVariant="primary"
-          leftContent={PlusIcon}
-          text="할 일 추가"
-          onClick={onAddClick}
-        />
-      </Styled.AddButtonWrapper>
-    </VStack>
+      <button
+        style={{ width: '50px', height: '50px' }}
+        onClick={onAddClick}
+        title="add"
+      />
+      <div style={{ width: '100%', flex: 1, overflowY: 'scroll' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+          {tasks &&
+            tasks.map((task) => (
+              <TaskBox
+                onClick={() => onTaskClick(task)}
+                id={task.id}
+                date={task.deadline}
+                title={task.title}
+                userid={task.assignee.id}
+              />
+            ))}
+        </div>
+      </div>
+    </Layout>
   )
 }
 

@@ -7,7 +7,7 @@ export interface User {
 export interface Task {
   id: string
   title: string
-  deadline: Date
+  deadline: string
   assignee: User
   completed: boolean
 }

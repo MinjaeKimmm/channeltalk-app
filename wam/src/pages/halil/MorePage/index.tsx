@@ -4,17 +4,8 @@ import Layout from '@wam/components/Layout'
 import ShortInput from '@wam/components/ShortInput'
 import TaskManager from '@wam/components/TaskManager'
 import { useSize } from '@wam/hooks/useSize'
-
-interface Task {
-  id: string
-  title: string
-  deadline: Date
-  assignee: {
-    username: string
-    url: string
-  }
-  completed: boolean
-}
+import { useEffect } from 'react'
+import { Task } from '../type'
 
 interface MorePageProps {
   task: Task
@@ -25,6 +16,10 @@ interface MorePageProps {
 
 function MorePage({ task, onDelete, onComplete, onCancel }: MorePageProps) {
   useSize({ width: 490, height: 760 })
+
+  useEffect(() => {
+    console.log('this is morepage')
+  }, [])
 
   return (
     <Layout>

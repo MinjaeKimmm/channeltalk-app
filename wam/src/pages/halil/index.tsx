@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 // index.tsx
 import { useEffect, useState } from 'react'
 import ViewPage from './ViewPage'
@@ -67,7 +68,6 @@ function Halil({ onClose }: HalilProps) {
           onTaskClick={handleTaskClick}
           onPersonClick={handlePersonClick}
           onAddClick={() => setCurrentPage('add')}
-          onClose={onClose}
         />
       )}
       {currentPage === 'add' && (

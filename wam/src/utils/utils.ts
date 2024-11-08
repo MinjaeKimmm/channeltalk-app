@@ -1,3 +1,7 @@
+export const formatDigit = (num: number): string => {
+  return num.toString().padStart(2, '0');
+}
+
 export const getISOstring = (
   year: number,
   month: number,

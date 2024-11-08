@@ -1,13 +1,12 @@
-import { useState } from 'react'
-import {
-  VStack,
-  Button,
-  Text,
-  TextField,
-  HStack,
-} from '@channel.io/bezier-react'
+import { useEffect, useState } from 'react'
+
 import { useSize } from '@wam/hooks/useSize'
 import { Task, User } from '../type'
+import Layout from '@wam/components/Layout'
+import Header from '@wam/components/Header'
+import ShortInput from '@wam/components/ShortInput'
+import TaskManager from '@wam/components/TaskManager'
+import Button from '@wam/components/Button'
 
 interface AddPageProps {
   user: User | undefined
@@ -19,16 +18,19 @@ function AddPage({ user, onAdd, onCancel }: AddPageProps) {
   useSize({ width: 490, height: 760 })
   const [title, setTitle] = useState('')
   const [deadline, setDeadline] = useState('')
-  const [assignee, setAssignee] = useState('')
+
+  useEffect(() => {
+    console.log('this is morepage')
+  }, [])
 
   if (!user) return
 
   const handleSubmit = () => {
-    if (title && deadline && assignee) {
+    if (title && deadline) {
       onAdd({
         id: '',
         title,
-        deadline: new Date(deadline),
+        deadline: deadline,
         assignee: user,
         completed: false,
       })
@@ -36,71 +38,47 @@ function AddPage({ user, onAdd, onCancel }: AddPageProps) {
   }
 
   return (
-    <VStack spacing={24}>
-      <Text
-        typo="24"
-        bold
-        color="txt-black-darkest"
-      >
-        할 일 생성
-      </Text>
-
-      <Text
-        typo="16"
-        bold
-        color="txt-black-darkest"
-      >
-        할 일 제목
-      </Text>
-      <TextField
-        value={title}
-        onChange={(e) => setTitle(e.target.value)}
+    <Layout>
+      <Header
+        label="할 일 생성"
+        action={{ label: '뒤로가기', onClick: onCancel }}
       />
-
-      <Text
-        typo="16"
-        bold
-        color="txt-black-darkest"
+      <div
+        style={{
+          flex: 1,
+          width: '100%',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'flex-start',
+          justifyContent: 'space-between',
+          boxSizing: 'border-box',
+          padding: '54px 0px',
+        }}
       >
-        할 일 기한
-      </Text>
-      <TextField
-        value={deadline}
-        onChange={(e) => setDeadline(e.target.value)}
-      />
-
-      <Text
-        typo="16"
-        bold
-        color="txt-black-darkest"
-      >
-        할 일 담당자
-      </Text>
-      <TextField
-        value={assignee}
-        onChange={(e) => setAssignee(e.target.value)}
-      />
-
-      <HStack
-        spacing={8}
-        justify="center"
-        style={{ marginTop: 'auto' }}
-      >
-        <Button
-          colorVariant="red"
-          styleVariant="secondary"
-          text="취소"
-          onClick={onCancel}
+        <ShortInput
+          title="할 일 제목"
+          value={title}
+          onChange={(val) => setTitle(val)}
+          maxLength={30}
+          disabled={false}
         />
-        <Button
-          colorVariant="blue"
-          styleVariant="primary"
-          text="추가"
-          onClick={handleSubmit}
-          disabled={!title || !deadline || !assignee}
+        <ShortInput
+          title="할 일 기한"
+          value={new Date().toISOString()}
+          onChange={(val) => setDeadline(val)}
+          maxLength={30}
+          disabled={true}
         />
-      </HStack>
-    </VStack>
+        <TaskManager
+          username={user.username}
+          url={user.url}
+        />
+      </div>
+      <Button
+        label="추가하기"
+        onClick={title && deadline ? handleSubmit : () => {}}
+      />
+    </Layout>
   )
 }
 

@@ -1,22 +1,38 @@
 import { colors } from '@wam/utils/styles'
 import styled from 'styled-components'
 import Text from './Text'
-import { getDateInfo, isImpend } from '@wam/utils/utils'
+import { formatDigit, getDateInfo, isImpend } from '@wam/utils/utils'
 // import { getDateInfo } from '@wam/utils/utils'
 
-interface TaskProps {
+interface TaskBoxProps {
   id: string
   date: string //isostring
   title: string
   userid: string
+  onClick: () => void
 }
 
-export default function Task(props: TaskProps) {
+const monthName = [
+  'Jan',
+  'Feb',
+  'Mar',
+  'Apr',
+  'May',
+  'Jun',
+  'Jul',
+  'Aug',
+  'Sep',
+  'Oct',
+  'Nov',
+  'Dec',
+]
+
+export default function TaskBox(props: TaskBoxProps) {
   const date = getDateInfo(props.date)
   const impend = isImpend(props.date)
 
   return (
-    <TaskWrapper>
+    <TaskBoxWrapper onClick={props.onClick}>
       <DateWrapper>
         <Text
           type="Subtitle"
@@ -25,14 +41,18 @@ export default function Task(props: TaskProps) {
         />
         <Text
           type="Caption"
-          label={date.month.toString()}
+          label={monthName[date.month - 1]}
           color="white"
         />
       </DateWrapper>
       <TitleWrapper>
         <Text
           type="Caption"
-          label={date.weekday.toString() + `${date.hours}:${date.minutes}`}
+          label={
+            date.weekday.toString() +
+            ' ' +
+            `${formatDigit(date.hours)}:${formatDigit(date.hours)}`
+          }
           color={impend ? 'highlight' : 'white'}
         />
         <Text
@@ -41,11 +61,11 @@ export default function Task(props: TaskProps) {
           color={impend ? 'highlight' : 'white'}
         />
       </TitleWrapper>
-    </TaskWrapper>
+    </TaskBoxWrapper>
   )
 }
 
-const TaskWrapper = styled.div`
+const TaskBoxWrapper = styled.div`
   width: 100%;
   height: 110px;
 
@@ -58,6 +78,7 @@ const TaskWrapper = styled.div`
   justify-content: flex-start;
   gap: 20px;
 
+  border-radius: 12px;
   background-color: ${colors.darkgray};
 `
 
@@ -68,14 +89,16 @@ const DateWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: center;
 
+  border-radius: 12px;
   background-color: ${colors.black};
 `
 
 const TitleWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   justify-content: flex-start;
+  gap: 4px;
 `
