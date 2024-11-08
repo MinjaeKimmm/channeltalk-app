@@ -22,10 +22,18 @@ app = FastAPI()
 static_dir = "/app/wam/dist"
 assets_dir = os.path.join(static_dir, "assets")
 
+# CORS configuration for cross-origin requests
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # Mount assets for direct access
 if os.path.exists(assets_dir):
-    app.mount("/wa/assets", StaticFiles(directory=assets_dir), name="assets")
+    app.mount("/wam/assets", StaticFiles(directory=assets_dir), name="assets")
 
 # SPA Fallback for /wam routes
 @app.get("/wam/{full_path:path}")
