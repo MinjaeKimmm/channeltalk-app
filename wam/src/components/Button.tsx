@@ -9,7 +9,7 @@ interface ButtonProps {
 
 export default function Button(props: ButtonProps) {
   return (
-    <ButtonWrapper>
+    <ButtonWrapper onClick={props.onClick}>
       <Text
         type="Body"
         label={props.label}
@@ -28,4 +28,5 @@ const ButtonWrapper = styled.div`
   justify-content: center;
 
   background-color: ${colors.darkgray};
+  cursor: pointer;
 `

@@ -17,12 +17,14 @@ export default function Header(props: HeaderProps) {
         label={props.label}
         color="white"
       />
-      <Text
-        type="Caption"
-        label={props.action?.label ?? ''}
-        color="lightgray"
-        onClick={props.action?.onClick}
-      />
+      <div style={{ cursor: 'pointer' }}>
+        <Text
+          type="Caption"
+          label={props.action?.label ?? ''}
+          color="lightgray"
+          onClick={props.action?.onClick}
+        />
+      </div>
     </HeaderWrapper>
   )
 }

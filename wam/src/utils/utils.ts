@@ -63,3 +63,19 @@ export const getDateInfo = (isoString: string): DateInfo => {
   // Partial 타입의 result를 DateInfo로 변환하여 반환
   return result as DateInfo;
 }
+
+export const isImpend = (isoString: string): boolean => {
+  // 입력으로 받은 ISO 문자열을 Date 객체로 변환
+  const inputDate = new Date(isoString);
+  const currentDate = new Date();
+
+  // 두 날짜의 차이를 밀리초 단위로 계산
+  const differenceInMilliseconds = Math.abs(currentDate.getTime() - inputDate.getTime());
+
+  // 48시간(2일)을 밀리초로 변환 (48시간 * 60분 * 60초 * 1000밀리초)
+  const hours48InMilliseconds = 48 * 60 * 60 * 1000;
+
+  // 차이가 48시간 미만이면 true, 아니면 false 반환
+  return differenceInMilliseconds < hours48InMilliseconds;
+}
+
