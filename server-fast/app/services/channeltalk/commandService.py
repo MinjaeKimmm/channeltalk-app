@@ -9,10 +9,10 @@ async def register_commands() -> None:
         print("Getting access token...")
         access_token = await get_access_token()
         print(f"Got access token: {access_token[:10]}...")
-        
+
         url = config["APPSTORE_URL"]
         print(f"Using API URL: {url}")
-        
+
         body = {
             "method": "registerCommands",
             "params": {
@@ -33,15 +33,28 @@ async def register_commands() -> None:
                         "actionFunctionName": "register",
                         "alfMode": "disable",
                         "enabledByDefault": True,
+                    },
+                    {
+                        "name": "halmal",
+                        "scope": "desk",
+                        "description": "Open Halmal WAM",
+                        "actionFunctionName": "halmal",
+                        "alfMode": "disable",
+                        "enabledByDefault": True,
+                    },
+                    {
+                        "name": "halil",
+                        "scope": "desk",
+                        "description": "Open Halil WAM",
+                        "actionFunctionName": "halil",
+                        "alfMode": "disable",
+                        "enabledByDefault": True,
                     }
                 ]
             }
         }
 
-        headers = {
-            "x-access-token": access_token,
-            "Content-Type": "application/json"
-        }
+        headers = {"x-access-token": access_token, "Content-Type": "application/json"}
         
         print("Sending register commands request...")
         async with httpx.AsyncClient() as client:

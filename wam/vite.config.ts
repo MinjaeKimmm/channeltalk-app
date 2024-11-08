@@ -1,15 +1,17 @@
-import { defineConfig } from 'vite';
-import react from '@vitejs/plugin-react';
-import * as path from "path";
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
+import * as path from 'path'
 
-const API_BASE = process.env.VITE_API_BASE || `http://localhost:${process.env.SERVER_PORT ?? 8000}`;
+const API_BASE =
+  process.env.VITE_API_BASE ||
+  `http://localhost:${process.env.SERVER_PORT ?? 8000}`
 
 export default defineConfig({
-  base: '/wam/',
+  base: './',
   plugins: [react()],
   resolve: {
     alias: {
-      "@wam": path.resolve(__dirname, "src"),
+      '@wam': path.resolve(__dirname, 'src'),
     },
   },
   build: {
@@ -17,9 +19,9 @@ export default defineConfig({
     chunkSizeWarningLimit: 1000,
   },
   server: {
-    port: parseInt(process.env.CLIENT_PORT ?? "3000"),
+    port: parseInt(process.env.CLIENT_PORT ?? '3000'),
     proxy: {
-      "/api": {
+      '/api': {
         target: API_BASE,
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, '/api'),
@@ -27,4 +29,4 @@ export default defineConfig({
       },
     },
   },
-});
+})
