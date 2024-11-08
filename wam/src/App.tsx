@@ -2,9 +2,9 @@ import { useEffect, useState } from 'react'
 import { AppProvider, type ThemeName } from '@channel.io/bezier-react'
 import { isMobile } from './utils/userAgent'
 import { getWamData } from './utils/wam'
-import { Tutorial, Register } from './pages'
+import { Tutorial, Register, Halmal } from './pages'
 
-type WamType = 'tutorial' | 'register' | 'default'
+type WamType = 'tutorial' | 'register' | 'halmal' |'default'
 
 function App() {
   const [theme, setTheme] = useState<ThemeName>('light')
@@ -32,6 +32,8 @@ function App() {
         return <Tutorial />
       case 'register':
         return <Register />
+      case 'halmal':
+        return <Halmal />
       default:
         return <div>No WAM found</div>
     }
