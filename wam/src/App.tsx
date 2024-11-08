@@ -35,7 +35,7 @@ function App() {
       case 'halmal':
         return <Halmal />
       case 'halil':
-        return <Halil onClose={() => console.log('Halil closed')} />
+        return <Halil  />
       default:
         return <div>No WAM found</div>
     }

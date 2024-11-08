@@ -9,11 +9,7 @@ import { Task, User } from './type'
 
 type HalilPage = 'view' | 'add' | 'more'
 
-interface HalilProps {
-  onClose: () => void
-}
-
-function Halil({ onClose }: HalilProps) {
+function Halil() {
   const [currentPage, setCurrentPage] = useState<HalilPage>('view')
   const [selectedTask, setSelectedTask] = useState<Task | null>(null)
 
