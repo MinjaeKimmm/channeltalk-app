@@ -80,6 +80,7 @@ const TaskBoxWrapper = styled.div`
 
   border-radius: 12px;
   background-color: ${colors.darkgray};
+  cursor: pointer;
 `
 
 const DateWrapper = styled.div`

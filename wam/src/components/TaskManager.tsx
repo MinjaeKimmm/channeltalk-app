@@ -21,7 +21,11 @@ export default function TaskManager(props: TaskManagerProps) {
           label={props.username}
           color="white"
         />
-        <ManagerImg src={props.url} />
+        {!props.url || props.url.length === 0 ? (
+          <ManagerImgMock />
+        ) : (
+          <ManagerImg src={props.url} />
+        )}
       </ManagerWrapper>
     </TaskManagerWrapper>
   )
@@ -53,4 +57,12 @@ const ManagerImg = styled.img`
   height: 54px;
 
   object-fit: cover;
+`
+
+const ManagerImgMock = styled.div`
+  width: 54px;
+  height: 54px;
+
+  background-color: ${colors.highlight};
+  border-radius: 1000px;
 `

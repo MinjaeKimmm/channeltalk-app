@@ -70,7 +70,7 @@ function ViewPage({
             }}
           >
             <Text
-              type="Title"
+              type="Supertitle"
               label={tasks.filter((task) => !task.completed).length.toString()}
               color="white"
             />

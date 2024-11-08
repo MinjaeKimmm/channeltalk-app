@@ -6,12 +6,26 @@ export interface TextProps {
   color: keyof typeof colors
   onClick?: () => void
 }
-export type TextType = 'Title' | 'Subtitle' | 'Body' | 'Caption'
+export type TextType =
+  | 'Title'
+  | 'Subtitle'
+  | 'Body'
+  | 'Caption'
+  | 'Supertitle'
+  | 'Powertitle'
 
 const fontStyle = {
   Title: {
     weight: 600,
     size: 32,
+  },
+  Supertitle: {
+    weight: 600,
+    size: 45,
+  },
+  Powertitle: {
+    weight: 600,
+    size: 64,
   },
   Subtitle: {
     weight: 600,

@@ -20,11 +20,27 @@ export default function Clock(props: ClockProps) {
           label={props.username}
           color="lightgray"
         />
-        <Text
-          type="Title"
-          label={props.rate.toString() + '%'}
-          color="white"
-        />
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'row',
+            alignItems: 'flex-end',
+            paddingLeft: '15px',
+          }}
+        >
+          <Text
+            type="Powertitle"
+            label={props.rate.toString()}
+            color="white"
+          />
+          <div style={{ margin: '15px 4px' }}>
+            <Text
+              type="Body"
+              label="%"
+              color="lightgray"
+            />
+          </div>
+        </div>
       </ClockCore>
     </ClockWrapper>
   )
