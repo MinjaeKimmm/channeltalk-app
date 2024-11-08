@@ -1,6 +1,10 @@
+import { colors } from '@wam/utils/styles'
+
 export interface TextProps {
   label: string
   type: TextType
+  color: keyof typeof colors
+  onClick?: () => void
 }
 export type TextType = 'Title' | 'Subtitle' | 'Body' | 'Caption'
 
@@ -29,9 +33,11 @@ export default function Text(props: TextProps) {
       style={{
         height: 'fit-content',
         width: 'fit-content',
+        color: colors[props.color],
         fontWeight: fontStyle[props.type].weight,
         fontSize: `${fontStyle[props.type].size}`,
       }}
+      onClick={props.onClick}
     >
       {props.label}
     </div>
