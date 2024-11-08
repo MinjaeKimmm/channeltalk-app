@@ -13,7 +13,7 @@ function App() {
   const getWamFromPath = () => {
     const pathSegments = window.location.pathname.split('/')
     console.log(pathSegments)
-    return pathSegments[pathSegments.length - 2] as WamType // Extract WAM name
+    return pathSegments[pathSegments.length - 1] as WamType // Extract WAM name
   }
 
   useEffect(() => {
@@ -35,7 +35,7 @@ function App() {
       case 'halmal':
         return <Halmal />
       case 'halil':
-        return <Halil  />
+        return <Halil />
       default:
         return <div>No WAM found</div>
     }

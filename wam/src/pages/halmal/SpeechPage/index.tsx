@@ -1,11 +1,12 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useSize } from '@wam/hooks/useSize'
 import Layout from '@wam/components/Layout'
 import Header from '@wam/components/Header'
 import Button from '@wam/components/Button'
 import IconButton from '@wam/components/IconButton'
 import Card from '@wam/components/Card'
-import { cardNames } from '@wam/utils/files'
+import { cardNames, getApiInput } from '@wam/utils/files'
+import { callFunction, getWamData } from '@wam/utils/wam'
 
 interface SpeechPageProps {
   onBack: () => void
@@ -16,6 +17,7 @@ function SpeechPage({ onBack, message }: SpeechPageProps) {
   useSize({ width: 490, height: 760 })
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
   const totalImages = cardNames.length
+  const appId = useMemo(() => getWamData('appId') ?? '', [])
 
   useEffect(() => {
     console.log(currentImageIndex)
@@ -30,6 +32,19 @@ function SpeechPage({ onBack, message }: SpeechPageProps) {
   }
 
   const handleSend = async () => {
+    const inputCategory = getApiInput(currentImageIndex)
+    const input = {
+      message,
+      types: inputCategory[1],
+    }
+    if (inputCategory[0] === 'tone') {
+      // tone
+      await callFunction(appId, 'changeTone', { input })
+    } else {
+      //character
+      await callFunction(appId, 'changeCharacter', { input })
+    }
+
     console.log('Sending message:', message, 'with image:', currentImageIndex)
   }
 

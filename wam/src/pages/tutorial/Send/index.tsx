@@ -14,16 +14,16 @@ import {
   callNativeFunction,
   getWamData,
 } from '../../../utils/wam'
-import * as Styled from './Send.styled';
+import * as Styled from './Send.styled'
 
-import { useSize } from '../../../hooks/useSize';
+import { useSize } from '../../../hooks/useSize'
 
 interface SendProps {
-  onNavigate: (page: 'choose' | 'send') => void;
+  onNavigate: (page: 'choose' | 'send') => void
 }
 
 function Send({ onNavigate }: SendProps) {
-  useSize({ width: 390, height: 220 });
+  useSize({ width: 390, height: 220 })
 
   const chatTitle = useMemo(() => getWamData('chatTitle') ?? '', [])
 

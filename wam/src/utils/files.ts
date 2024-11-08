@@ -3,7 +3,18 @@
 export type CardName = "dialogue" | "heartsping" | "jongwon" | "kind" | "mom" | "professional" | "sarcastic" | "seongjae" | "wooakgood"
 export type CardType = "tone" | "character"
 
-export const cardNames: CardName[] = ["dialogue", "heartsping", "jongwon", "kind", "mom", "professional", "sarcastic", "seongjae", "wooakgood"]
+export const cardNames: CardName[] = ["dialogue", "kind", "mom", "sarcastic", "professional", "heartsping", "jongwon", "seongjae", "wooakgood"]
+
+export const typeNames = ["backChat", "friendly", "parents", "sarcastic", "professional", "hachuPing", "paikJongWon", "ahnSungJae", "woowakGood"]
+
+export const getApiInput = (index: number) => {
+  if (index < 5) {
+    return ["tone", typeNames[index]]
+  } else {
+    return ["character", typeNames[index]]
+  }
+
+}
 
 export const cards: Record<CardName, { type: CardType, title: string }> = {
   dialogue: {
